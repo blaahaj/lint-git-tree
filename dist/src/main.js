@@ -27,8 +27,8 @@ const main = async () => {
                 ++errors;
             }
             else {
-                const dirnameBuffer = lastSlash >= 0 ?
-                    Buffer.copyBytesFrom(e.name, 0, lastSlash)
+                const dirnameBuffer = lastSlash >= 0
+                    ? Buffer.copyBytesFrom(e.name, 0, lastSlash)
                     : Buffer.of();
                 const dirnameHex = dirnameBuffer.toString("hex");
                 const arr = entriesByParent.get(dirnameHex);
