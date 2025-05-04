@@ -1,5 +1,5 @@
 ---
-name: git-lint-tree
+name: lint-git-tree
 author: Rachel Evans <rachel@rachelevans.org>
 description: Check a git tree for case clashes and invalid / non-normal UTF-8 encoding
 branding:
