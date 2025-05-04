@@ -1,6 +1,4 @@
-import { parse, readRemoteTree, type ListingEntry } from "./gitLsTree.js";
-
-type Tree = ListingEntry<Buffer>[];
+import { parse, readRemoteTree } from "./gitLsTree.js";
 
 const main = async () => {
   const bareDir = "tree-bare-dir";
@@ -14,7 +12,7 @@ const main = async () => {
         tmpDir: bareDir,
         remoteUrl,
         sha: process.env.GITHUB_SHA ?? "?",
-      })
+      }),
     ),
   ];
 
@@ -36,7 +34,7 @@ const main = async () => {
       const normalised = Buffer.from(basename.normalize(), "utf-8");
       if (!basenameBuffer.equals(normalised)) {
         console.log(
-          `ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`
+          `ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`,
         );
         ++errors;
       } else {
@@ -64,11 +62,11 @@ const main = async () => {
       else childNamesByLower.set(lower, [child]);
     }
 
-    for (const [lower, clashingNames] of childNamesByLower.entries()) {
+    for (const clashingNames of childNamesByLower.values()) {
       if (clashingNames.length == 1) continue;
 
       console.log(
-        `ERROR: case clash in ${parent}: ${JSON.stringify(clashingNames)}`
+        `ERROR: case clash in ${parent}: ${JSON.stringify(clashingNames)}`,
       );
       ++errors;
     }

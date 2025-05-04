@@ -15,7 +15,7 @@ export const readRemoteTree = async (args: {
     ["fetch", "--depth", "1", args.remoteUrl, process.env.GITHUB_SHA ?? "?"],
     {
       cwd: args.tmpDir,
-    }
+    },
   );
 
   const out = (
@@ -52,7 +52,7 @@ export function* parse(listing: Buffer): Generator<ListingEntry<Buffer>> {
     const name = Buffer.copyBytesFrom(
       listing,
       tabIndex + 1,
-      zeroIndex - (tabIndex + 1)
+      zeroIndex - (tabIndex + 1),
     );
 
     yield {
