@@ -1,6 +1,7 @@
+import { randomUUID } from "node:crypto";
 import { parse, readRemoteTree } from "./gitLsTree.js";
 const main = async () => {
-    const bareDir = "tree-bare-dir";
+    const bareDir = `${process.env.RUNNER_TEMP ?? "?"}/lint-git-tree-${randomUUID()}`;
     const remoteUrl = `https://github.com/${process.env.GITHUB_REPOSITORY ?? "?"}`;
     const entries = [
         ...parse(await readRemoteTree({
