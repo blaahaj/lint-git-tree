@@ -1,0 +1,11 @@
+---
+name: git-lint-tree
+author: Rachel Evans <rachel@rachelevans.org>
+description: Check a git tree for case clashes and invalid / non-normal UTF-8 encoding
+branding:
+  icon: folder
+  color: purple
+
+runs:
+  using: "node20"
+  main: "dist/main.js"
