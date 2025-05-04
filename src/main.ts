@@ -33,7 +33,7 @@ const main = async () => {
       console.log(`ERROR: invalid UTF-8 in name: ${nameAndHex}`);
       ++errors;
     } else {
-      const normalised = Buffer.from(basename, "utf-8");
+      const normalised = Buffer.from(basename.normalize(), "utf-8");
       if (!basenameBuffer.equals(normalised)) {
         console.log(
           `ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`
