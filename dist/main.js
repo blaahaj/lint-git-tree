@@ -21,7 +21,7 @@ const main = async () => {
             ++errors;
         }
         else {
-            const normalised = Buffer.from(basename, "utf-8");
+            const normalised = Buffer.from(basename.normalize(), "utf-8");
             if (!basenameBuffer.equals(normalised)) {
                 console.log(`ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`);
                 ++errors;
