@@ -1,6 +1,10 @@
 import type { ListingEntry } from "./parseGitTree.js";
 
-export const checkTreeEntries = (entries: readonly ListingEntry<Buffer>[]) => {
+export type CheckResult = { readonly errors: readonly string[] };
+
+export const checkTreeEntries = (
+  entries: readonly ListingEntry<Buffer>[],
+): CheckResult => {
   const entriesByParent = new Map<string, string[]>();
 
   const errors: string[] = [];
