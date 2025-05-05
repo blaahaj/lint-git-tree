@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as tmp from "tmp";
 import { lintLocalTree, lintRemoteTree, reportAndExit } from "./module.js";
 import { stat } from "node:fs/promises";
