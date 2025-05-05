@@ -4,7 +4,10 @@ on:
   push:
     branches: ["main"]
   pull_request:
-    types: [opened, synchronize, reopened]
+    # "labeled" is here because release-please (being an action) can't trigger
+    # an action (i.e. "opened"); so we ask a human to touch the PR to trigger it.
+    # https://github.com/googleapis/release-please-action/issues/402
+    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
 
 jobs:
