@@ -8,8 +8,6 @@ permissions:
   contents: write
   issues: write # for creating labels
   pull-requests: write
-  actions: write # for triggering the pr-opened workflow?
-  checks: write # for triggering the pr-opened workflow?
 
 name: release-please
 
