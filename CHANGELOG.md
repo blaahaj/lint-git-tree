@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/blaahaj/lint-git-tree/compare/v0.1.2...v1.0.0) (2025-05-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* provide as GitHub action, npx, and module ([#9](https://github.com/blaahaj/lint-git-tree/issues/9))
+
+### Features
+
+* provide as GitHub action, npx, and module ([#9](https://github.com/blaahaj/lint-git-tree/issues/9)) ([0230be2](https://github.com/blaahaj/lint-git-tree/commit/0230be224efaa06db2231f180464a1e133388de9))
+
 ## [0.1.2](https://github.com/blaahaj/lint-git-tree/compare/v0.1.1...v0.1.2) (2025-05-04)
 
 
