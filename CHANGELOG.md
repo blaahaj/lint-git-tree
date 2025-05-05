@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/blaahaj/lint-git-tree/compare/v1.0.0...v1.0.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* add shebang to cli.js ([#17](https://github.com/blaahaj/lint-git-tree/issues/17)) ([95cb931](https://github.com/blaahaj/lint-git-tree/commit/95cb9312b5515831b94e803c5ee2ab03688fe8e8))
+
 ## [1.0.0](https://github.com/blaahaj/lint-git-tree/compare/v0.1.2...v1.0.0) (2025-05-05)
 
 
