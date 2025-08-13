@@ -1,18 +1,20 @@
+import { inspect } from "node:util";
+const encoding = "utf-8";
+const showBuffer = (b) => `${inspect(b.toString(encoding))} ${inspect(b)}`;
 export const checkTreeEntries = (entries) => {
     const entriesByParent = new Map();
     const errors = [];
     for (const e of entries) {
         const lastSlash = e.name.lastIndexOf(0x2f);
         const basenameBuffer = lastSlash >= 0 ? Buffer.copyBytesFrom(e.name, lastSlash + 1) : e.name;
-        const basename = basenameBuffer.toString("utf-8");
-        const nameAndHex = `${basename} (${basenameBuffer.toString("hex")})`;
+        const basename = basenameBuffer.toString(encoding);
         if (basename.includes("\uFFFD")) {
-            errors.push(`ERROR: invalid UTF-8 in name: ${nameAndHex}`);
+            errors.push(`ERROR: invalid ${encoding} in ${showBuffer(basenameBuffer)} (full path: ${inspect(e.name.toString(encoding))})`);
         }
         else {
-            const normalised = Buffer.from(basename.normalize(), "utf-8");
+            const normalised = Buffer.from(basename.normalize(), encoding);
             if (!basenameBuffer.equals(normalised)) {
-                errors.push(`ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`);
+                errors.push(`ERROR: non-normalised ${encoding} encoding in ${showBuffer(basenameBuffer)} (full path: ${inspect(e.name.toString(encoding))})`);
             }
             else {
                 const dirnameBuffer = lastSlash >= 0
@@ -29,7 +31,7 @@ export const checkTreeEntries = (entries) => {
     }
     for (const [parentHex, childNames] of entriesByParent.entries()) {
         const parentBuffer = Buffer.from(parentHex, "hex");
-        const parent = parentBuffer.toString("utf-8");
+        const parent = parentBuffer.toString(encoding);
         const childNamesByLower = new Map();
         for (const child of childNames) {
             const lower = child.toLocaleLowerCase();
@@ -42,7 +44,7 @@ export const checkTreeEntries = (entries) => {
         for (const clashingNames of childNamesByLower.values()) {
             if (clashingNames.length == 1)
                 continue;
-            errors.push(`ERROR: case clash in ${parent}: ${JSON.stringify(clashingNames)}`);
+            errors.push(`ERROR: case clash between ${clashingNames.map((s) => inspect(s)).join(" and ")} under directory ${inspect(parent)}`);
         }
     }
     return { errors };

@@ -1,6 +1,12 @@
+import { inspect } from "node:util";
 import type { ListingEntry } from "./parseGitTree.js";
 
+const encoding = "utf-8";
+
 export type CheckResult = { readonly errors: readonly string[] };
+
+const showBuffer = (b: Buffer): string =>
+  `${inspect(b.toString(encoding))} ${inspect(b)}`;
 
 export const checkTreeEntries = (
   entries: readonly ListingEntry<Buffer>[],
@@ -14,16 +20,17 @@ export const checkTreeEntries = (
     const basenameBuffer =
       lastSlash >= 0 ? Buffer.copyBytesFrom(e.name, lastSlash + 1) : e.name;
 
-    const basename = basenameBuffer.toString("utf-8");
-    const nameAndHex = `${basename} (${basenameBuffer.toString("hex")})`;
+    const basename = basenameBuffer.toString(encoding);
 
     if (basename.includes("\uFFFD")) {
-      errors.push(`ERROR: invalid UTF-8 in name: ${nameAndHex}`);
+      errors.push(
+        `ERROR: invalid ${encoding} in ${showBuffer(basenameBuffer)} (full path: ${inspect(e.name.toString(encoding))})`,
+      );
     } else {
-      const normalised = Buffer.from(basename.normalize(), "utf-8");
+      const normalised = Buffer.from(basename.normalize(), encoding);
       if (!basenameBuffer.equals(normalised)) {
         errors.push(
-          `ERROR: non-normalised UTF-8 encoding in name: ${nameAndHex}`,
+          `ERROR: non-normalised ${encoding} encoding in ${showBuffer(basenameBuffer)} (full path: ${inspect(e.name.toString(encoding))})`,
         );
       } else {
         const dirnameBuffer =
@@ -40,7 +47,7 @@ export const checkTreeEntries = (
 
   for (const [parentHex, childNames] of entriesByParent.entries()) {
     const parentBuffer = Buffer.from(parentHex, "hex");
-    const parent = parentBuffer.toString("utf-8");
+    const parent = parentBuffer.toString(encoding);
 
     const childNamesByLower = new Map<string, string[]>();
     for (const child of childNames) {
@@ -54,7 +61,7 @@ export const checkTreeEntries = (
       if (clashingNames.length == 1) continue;
 
       errors.push(
-        `ERROR: case clash in ${parent}: ${JSON.stringify(clashingNames)}`,
+        `ERROR: case clash between ${clashingNames.map((s) => inspect(s)).join(" and ")} under directory ${inspect(parent)}`,
       );
     }
   }

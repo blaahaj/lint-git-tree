@@ -39,11 +39,13 @@ await suite("checkTreeEntries", async () => {
           mode: "100644",
           type: "blob",
           sha: "meh",
-          name: Buffer.from([0x6e, 0xc3, 0x72]),
+          name: Buffer.from([0x61, 0x2f, 0x6e, 0xc3, 0x72]), // "når" but with the byte 0xa5 removed
         },
       ]);
       assert.equal(actual.errors.length, 1);
-      assert.match(actual.errors[0], /ERROR: invalid UTF-8 in name:/);
+      assert.match(actual.errors[0], /^ERROR: invalid utf-8/);
+      assert.match(actual.errors[0], / in 'n.*?r' <Buffer 6e c3 72> /);
+      assert.match(actual.errors[0], /full path: 'a\/n.*?r'/);
     });
 
     await it("1 bad item (non-normalised utf-8)", () => {
@@ -52,14 +54,13 @@ await suite("checkTreeEntries", async () => {
           mode: "100644",
           type: "blob",
           sha: "meh",
-          name: Buffer.from([0x6e, 0x61, 0xcc, 0x8a, 0x72]), // "når" but composing a ring onto the "a"
+          name: Buffer.from([0x61, 0x2f, 0x6e, 0x61, 0xcc, 0x8a, 0x72]), // "når" but composing a ring onto the "a"
         },
       ]);
       assert.equal(actual.errors.length, 1);
-      assert.match(
-        actual.errors[0],
-        /ERROR: non-normalised UTF-8 encoding in name:/,
-      );
+      assert.match(actual.errors[0], /^ERROR: non-normalised utf-8 encoding/);
+      assert.match(actual.errors[0], / in .n.*?r. <Buffer 6e 61 cc 8a 72>/);
+      assert.match(actual.errors[0], /full path: .a\/n.*?r./);
     });
   });
 
@@ -119,7 +120,9 @@ await suite("checkTreeEntries", async () => {
       ]);
       assert.equal(actual.errors.length, 1);
       assert.match(actual.errors[0], /ERROR: case clash/);
-      // FIXME: no checking the reporting of *what* clashed, or *where*
+      assert.match(actual.errors[0], /.foo./);
+      assert.match(actual.errors[0], /.Foo./);
+      assert.match(actual.errors[0], / under directory .dir1./);
     });
 
     await it("clash (file clashes with dir)", () => {
@@ -128,24 +131,27 @@ await suite("checkTreeEntries", async () => {
           mode: "040000",
           type: "tree",
           sha: "meh",
-          name: Buffer.from("FOO", "utf-8"),
+          name: Buffer.from("x/FOO", "utf-8"),
         },
         {
           mode: "100644",
           type: "blob",
           sha: "meh",
-          name: Buffer.from("FOO/something", "utf-8"),
+          name: Buffer.from("x/FOO/something", "utf-8"),
         },
         {
           mode: "100644",
           type: "blob",
           sha: "meh",
-          name: Buffer.from("foo", "utf-8"),
+          name: Buffer.from("x/foo", "utf-8"),
         },
       ]);
       assert.equal(actual.errors.length, 1);
+      console.log(...actual.errors);
       assert.match(actual.errors[0], /ERROR: case clash/);
-      // FIXME: no checking the reporting of *what* clashed, or *where*
+      assert.match(actual.errors[0], /.foo./);
+      assert.match(actual.errors[0], /.FOO./);
+      assert.match(actual.errors[0], / under directory .x./);
     });
   });
 });
