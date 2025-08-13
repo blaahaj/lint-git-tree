@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/blaahaj/lint-git-tree/compare/v1.0.1...v1.1.0) (2025-08-13)
+
+
+### Features
+
+* make error messages clearer & improve testing ([#19](https://github.com/blaahaj/lint-git-tree/issues/19)) ([694ae24](https://github.com/blaahaj/lint-git-tree/commit/694ae249abf273529836c5a2fbe8a7f6160712e3))
+
+
+### Bug Fixes
+
+* expand the README with usage, what is checked, and how to fix ([#22](https://github.com/blaahaj/lint-git-tree/issues/22)) ([4f854d0](https://github.com/blaahaj/lint-git-tree/commit/4f854d04c7abd694497f9996c857a5b005d7549a))
+
 ## [1.0.1](https://github.com/blaahaj/lint-git-tree/compare/v1.0.0...v1.0.1) (2025-05-05)
 
 

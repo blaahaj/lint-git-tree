@@ -14,7 +14,7 @@ Check that the file / directory names in a Git repository:
 The key is to have a step which includes:
 
 ```yaml
-uses: blaahaj/lint-git-tree@v0.0.0
+uses: blaahaj/lint-git-tree@v1.1.0
 ```
 
 For example, you could have a `.github/workflows/lint-git-tree.yml` file with the following:
@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: lint-git-tree
-        uses: blaahaj/lint-git-tree@v0.0.0
+        uses: blaahaj/lint-git-tree@v1.1.0
 ```
 
 ### Via `npx`
@@ -48,7 +48,7 @@ jobs:
 Simply invoke using `npx` from the root of your git working tree:
 
 ```shell
-npx @blaahaj/lint-git-tree@v0.0.0
+npx @blaahaj/lint-git-tree@v1.1.0
 ```
 
 ## What is checked
