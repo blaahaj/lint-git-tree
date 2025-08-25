@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/blaahaj/lint-git-tree/compare/v1.1.0...v1.1.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* bump dependencies ([#24](https://github.com/blaahaj/lint-git-tree/issues/24)) ([8f0743d](https://github.com/blaahaj/lint-git-tree/commit/8f0743d35313de1adeda5d96c88f1859671983c1))
+
 ## [1.1.0](https://github.com/blaahaj/lint-git-tree/compare/v1.0.1...v1.1.0) (2025-08-13)
 
 
